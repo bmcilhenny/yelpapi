@@ -63,12 +63,6 @@ class SearchBar extends React.Component {
     this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy)
   }
 
-  // handles if user clicks on the same filter twice, it will make the fetch request but not update the DOM.
-  // performance function
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return !(nextState.sortBy === this.state.sortBy) && nextProps.errors
-  // }
-
   renderSortByOptions() {
     return Object.keys(sortByOptions).map((sortByOption) => {
       let sortByOptionValue = sortByOptions[sortByOption];
@@ -83,32 +77,35 @@ class SearchBar extends React.Component {
 
   renderErrors() {
     return (
-      <div className="alert alert-danger">
-        <strong>Error!</strong>That was a "{this.props.errors.statusText}", make sure there are no typos.
-        </div>
-      )
+      <div className="alert">
+        That was a "{this.props.errors.statusText}", make sure there are no typos.
+      </div>
+    )
   }
 
 
   render() {
-    debugger;
     return (
       <div className="SearchBar">
-        <h1>Grumble</h1>
-        <div className="SearchBar-sort-options">
-          <ul>
-            {console.log("Inside the Search Bar render", this.state.sortBy)}
-            {this.renderSortByOptions()}
-          </ul>
+        <div className="SearchBarContent">
+          <h1>Grumble</h1>
+          <div className="SearchBar-sort-options">
+            <ul>
+              {console.log("Inside the Search Bar render", this.state.sortBy)}
+              {this.renderSortByOptions()}
+            </ul>
+          </div>
+          <div className="SearchBar-fields">
+            <input onChange={this.handleTermChange} placeholder="Search Businesses" />
+          <input onChange={this.handleLocationChange} placeholder="Where?" />
+          </div>
+          <div className="SearchBar-submit" onClick={this.handleSearch}>
+            <a>Let's Go</a>
+          </div>
         </div>
-        <div className="SearchBar-fields">
-          <input onChange={this.handleTermChange} placeholder="Search Businesses" />
-        <input onChange={this.handleLocationChange} placeholder="Where?" />
+        <div className="SearchBar-errors">
+          {this.props.errors ? this.renderErrors() : null}
         </div>
-        <div className="SearchBar-submit" onClick={this.handleSearch}>
-          <a>Let's Go</a>
-        </div>
-        {this.props.errors ? this.renderErrors() : null}
       </div>
     )
   }

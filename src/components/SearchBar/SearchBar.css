@@ -1,12 +1,16 @@
 
 .SearchBar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   background-image: url('./spaghetti-2931846_1280.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   height: 25rem;
+}
+
+.SearchBarContent {
+  height: 24rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .SearchBar-sort-options ul {
@@ -74,6 +78,15 @@
 .SearchBar-submit a:hover {
   cursor: pointer;
   background-color: #a7874b;
+}
+
+.SearchBar-errors {
+  text-align: center;
+}
+
+.SearchBar-errors .alert {
+  color: white;
+  align-self: flex-end;
 }
 
 @media only screen and (max-width: 560px) {
