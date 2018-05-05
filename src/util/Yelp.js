@@ -1,5 +1,4 @@
-const apiKey = '3SCmH-z2j_wP6KAAdTE0ALapZTGmK6xCDySNGGcc5RB24BgTIlUUmj46FqasJfKlDHJ8Y2zioLtM9t_2ixSEM-dgNwN0EmSQqmTsd_0eH6rzfV7TJdDk1G4aNeTsWnYx';
-const clientId = 'f3tkfKloHb4bwNp6yYb42w';
+import {apiKey} from '../secrets';
 
 const Yelp = {
   search(term, location, sortBy) {
@@ -7,9 +6,23 @@ const Yelp = {
       'headers': {
         'Authorization': `Bearer ${apiKey}`
       }})
-    .then(resp => resp.json())
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        return Promise.reject({
+          errors: {
+            status: resp.status,
+            statusText: resp.statusText
+          }
+        })
+      }
+    })
+    .catch(error => error)
     .then(jsonResponse => {
-      if (jsonResponse.businesses) {
+      if (jsonResponse.errors) {
+        return jsonResponse
+      } else {
         return jsonResponse.businesses.map(business => {
           return {
             id: business.id,
@@ -23,7 +36,6 @@ const Yelp = {
             rating: business.rating,
             reviewCount: business.review_count
           }
-
         });
       }
     })

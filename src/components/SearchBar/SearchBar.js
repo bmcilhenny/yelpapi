@@ -65,9 +65,9 @@ class SearchBar extends React.Component {
 
   // handles if user clicks on the same filter twice, it will make the fetch request but not update the DOM.
   // performance function
-  shouldComponentUpdate(nextProps, nextState) {
-    return !(nextState.sortBy === this.state.sortBy)
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return !(nextState.sortBy === this.state.sortBy) && nextProps.errors
+  // }
 
   renderSortByOptions() {
     return Object.keys(sortByOptions).map((sortByOption) => {
@@ -81,10 +81,20 @@ class SearchBar extends React.Component {
     })
   }
 
+  renderErrors() {
+    return (
+      <div className="alert alert-danger">
+        <strong>Error!</strong>That was a "{this.props.errors.statusText}", make sure there are no typos.
+        </div>
+      )
+  }
+
 
   render() {
+    debugger;
     return (
       <div className="SearchBar">
+        <h1>Grumble</h1>
         <div className="SearchBar-sort-options">
           <ul>
             {console.log("Inside the Search Bar render", this.state.sortBy)}
@@ -98,6 +108,7 @@ class SearchBar extends React.Component {
         <div className="SearchBar-submit" onClick={this.handleSearch}>
           <a>Let's Go</a>
         </div>
+        {this.props.errors ? this.renderErrors() : null}
       </div>
     )
   }

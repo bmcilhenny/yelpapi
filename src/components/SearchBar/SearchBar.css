@@ -19,7 +19,7 @@
 .SearchBar-sort-options li {
   cursor: pointer;
   width: 4.33rem;
-  border-bottom: 1px solid #fff;
+  border-bottom: 5px solid #fff;
   padding: 0 2.58rem .33rem 2.58rem;
   line-height: 1.13;
   text-align: center;
@@ -34,7 +34,7 @@
 
 .SearchBar-sort-options li.active,
 .SearchBar-sort-options li.active:hover {
-  border-bottom: 1px solid #f0c36c;
+  border-bottom: 5px solid purple;
   color: #f0c36c;
 }
 
@@ -65,7 +65,7 @@
 .SearchBar-submit a {
   border-radius: 4px;
   padding: .72rem 1.7rem;
-  background-color: #cca353;
+  background-color: purple;
   color: #ffffff;
   font-weight: 600;
   transition: background-color .5s;

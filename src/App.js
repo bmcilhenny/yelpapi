@@ -10,7 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      businesses: []
+      businesses: [],
+      errors: ''
     }
 
     this.searchYelp = this.searchYelp.bind(this);
@@ -18,19 +19,29 @@ class App extends Component {
 
   searchYelp(term, location, sortBy) {
     Yelp.search(term, location, sortBy).then(businesses => {
-      this.setState({
-        businesses: businesses
-      })
+      if (businesses.errors) {
+        this.setState({
+          errors: businesses.errors
+        })
+      } else {
+        this.setState({
+          businesses: businesses,
+          errors: ''
+        })
+      }
     })
     // console.log(`Searching Yelp with ${term}, ${location}, ${sortBy}`);
+  }
+
+  renderErrors() {
+
   }
 
   render() {
     return (
       <div className="App">
-        <h1>Grumble</h1>
-      <SearchBar searchYelp={this.searchYelp}/>
-    <BusinessList businesses={this.state.businesses}/>
+        <SearchBar searchYelp={this.searchYelp} errors={this.state.errors}/>
+        <BusinessList businesses={this.state.businesses}/>
       </div>
     );
   }
