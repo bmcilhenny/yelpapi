@@ -88,7 +88,7 @@ class SearchBar extends React.Component {
     return (
       <div className="SearchBar">
         <div className="SearchBarContent">
-          <h1>Grumble</h1>
+          <h1>Gurgle</h1>
           <div className="SearchBar-sort-options">
             <ul>
               {console.log("Inside the Search Bar render", this.state.sortBy)}
