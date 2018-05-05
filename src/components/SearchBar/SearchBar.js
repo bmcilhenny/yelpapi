@@ -21,19 +21,30 @@ class SearchBar extends React.Component {
     this.handleTermChange = this.handleTermChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    //this.handleSortByChange = this.handleSortByChange.bind(this);
   }
 
   getSortByClass(sortByOption) {
-    //console.log(this.state.sortBy === sortByOption ? 'active' : '')
     return this.state.sortBy === sortByOption ? 'active' : '';
   }
 
+
+  // handles another search without forcing user to hit search if they switch filter
   handleSortByChange(sortByOption) {
+    let oldSortby = this.state.sortBy
     this.setState({
       sortBy: sortByOption
+    }, () => {
+        if (this.readyToSearchAgain(oldSortby)) {
+          this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy)
+        }
     })
   }
+
+  readyToSearchAgain(oldSortBy) {
+    debugger;
+    return this.state.term && this.state.location && this.state.sortBy !== oldSortBy ? true : false;
+  }
+
 
   handleTermChange(e) {
     this.setState({
@@ -50,6 +61,12 @@ class SearchBar extends React.Component {
   handleSearch(e) {
     e.preventDefault();
     this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy)
+  }
+
+  // handles if user clicks on the same filter twice, it will make the fetch request but not update the DOM.
+  // performance function
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(nextState.sortBy === this.state.sortBy)
   }
 
   renderSortByOptions() {
@@ -70,7 +87,7 @@ class SearchBar extends React.Component {
       <div className="SearchBar">
         <div className="SearchBar-sort-options">
           <ul>
-            {console.log("Inside the Search Bar render", this)}
+            {console.log("Inside the Search Bar render", this.state.sortBy)}
             {this.renderSortByOptions()}
           </ul>
         </div>
